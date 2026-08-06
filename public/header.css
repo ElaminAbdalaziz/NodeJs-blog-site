@@ -1,0 +1,20 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #faf9f8;
+    padding: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+nav, footer {
+    flex-shrink: 0;
+}
+
+/* Any direct child of body that isn't nav or footer will expand */
+body > :not(nav):not(footer) {
+    flex: 1;
+}

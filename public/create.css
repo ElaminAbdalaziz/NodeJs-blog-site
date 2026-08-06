@@ -1,0 +1,88 @@
+/* Create blog form specific styles */
+.create-blogs.content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 3rem 10rem 3rem 10rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #e67e22;
+}
+
+.create-blogs.content h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form elements */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: -0.5rem;
+    font-size: 0.95rem;
+    font-size: 1.15rem;
+}
+
+input, textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fefefe;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #e67e22;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 250px;
+    width: 600px;
+}
+
+button {
+    background: #e67e22;
+    color: white;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 0.5rem;
+}
+
+button:hover {
+    background: #d35400;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .create-blogs.content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    .create-blogs.content h1 {
+        font-size: 1.6rem;
+    }
+}

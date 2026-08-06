@@ -1,0 +1,18 @@
+services:
+#   blog-coffee:
+#     image: 596953737494.dkr.ecr.eu-north-1.amazonaws.com/blog-coffee:v1.0
+#     ports:
+#       - "10000:10000"
+#     env_file:
+#       - .env
+#     restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "10000:10000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  

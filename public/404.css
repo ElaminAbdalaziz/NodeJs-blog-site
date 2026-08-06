@@ -1,0 +1,60 @@
+/* 404 page specific styles */
+.not-found.content {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 3rem 2rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: 5px solid #e67e22;
+}
+
+/* Optional: Add a large 404 number */
+.not-found.content::before {
+    content: "404";
+    font-size: 5rem;
+    font-weight: 700;
+    color: #e67e22;
+    opacity: 0.2;
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.not-found.content p {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin: 1rem 0;
+    font-weight: 500;
+}
+
+/* Add a subtle sub-message */
+.not-found .message {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-top: 0.5rem;
+}
+
+/* Optional: Add a little coffee/typing emoji for personality */
+.not-found .emoji {
+    font-size: 3rem;
+    margin: 1rem 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .not-found.content {
+        margin: 2rem 1rem;
+        padding: 2rem 1.5rem;
+    }
+    .not-found.content::before {
+        font-size: 3.5rem;
+    }
+    .not-found.content p {
+        font-size: 1.1rem;
+    }
+    .not-found .emoji {
+        font-size: 2.5rem;
+    }
+}
