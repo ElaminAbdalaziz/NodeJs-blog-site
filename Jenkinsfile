@@ -1,3 +1,5 @@
+def gv 
+
 pipeline{
     agent any
 
@@ -21,6 +23,8 @@ pipeline{
     //     //SERVER_CREDENTIALS = credentials("server-credentials")
     // }
 
+    // SERVER_CREDENTIALS = credentials("server-credentials")
+
     // tools{
     //     //maven "maven-3.8.6"
     // }
@@ -31,10 +35,19 @@ pipeline{
     }
 
     stages{   
+        stage("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
+
         stage("build"){
             steps{
-                echo "building the application..."
-                echo "Application version: ${params.VERSION}"
+                script{
+                    gv.buildApp()
+                }
             }
         }
     
@@ -46,7 +59,9 @@ pipeline{
             }
 
             steps{
-                echo "testing the application..."
+                script{
+                    gv.testApp()
+                }
             }
         }   
         
@@ -60,7 +75,9 @@ pipeline{
                 //     sh "echo Deploying to server with username: ${USER} and password: ${PWD}"
                 // }
 
-                echo "Deployment completed for version: ${params.VERSION}"
+                script{
+                    gv.deployApp()
+                }
             
             }
         }  
