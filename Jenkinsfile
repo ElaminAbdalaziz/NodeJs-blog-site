@@ -21,9 +21,9 @@ pipeline{
         //SERVER_CREDENTIALS = credentials("server-credentials")
     }
 
-    tools{
+    //tools{
         //maven "maven-3.8.6"
-    }
+    //}
 
     parameters{
         choice(name: "VERSION", choices: ["1.0.0", "1.0.1", "1.1.0"], description: "Select the version to deploy")
