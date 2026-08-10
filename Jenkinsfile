@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     tools{
-        nodejs 'node24'
+        nodejs 'node26'
     }
 
     stages{   
@@ -20,9 +20,9 @@ pipeline{
                 script{
                     echo "Building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t aziz-dh/blog-coffee-app:nodejs-bc-2.0 . "
+                        sh "docker build -t neededcofe/blog-coffee-app:nodejs-bc-2.0 . "
                         sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push aziz-dh/blog-coffee-app:nodejs-bc-2.0"
+                        sh "docker push neededcofe/blog-coffee-app:nodejs-bc-2.0"
                     }
                 }
             }
