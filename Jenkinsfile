@@ -1,90 +1,37 @@
-def gv 
-
 pipeline{
     agent any
 
-    post{
-        always{
-        echo "Cleaning up workspace..."
-        cleanWs()
-        }
-
-        success{
-        echo "Pipeline completed successfully!"
-        }
-
-        failure{
-        echo "Pipeline failed!"
-        }
-    }
-
-    // environment{
-    //     APP_VERSION = "1.1.0"
-    //     //SERVER_CREDENTIALS = credentials("server-credentials")
-    // }
-
-    // SERVER_CREDENTIALS = credentials("server-credentials")
-
-    // tools{
-    //     //maven "maven-3.8.6"
-    // }
-
-    parameters{
-        choice(name: "VERSION", choices: ["1.0.0", "1.0.1", "1.1.0"], description: "Select the version to deploy")
-        booleanParam(name: "RUN_TESTS", defaultValue: true, description: "Run tests after build?")
+    tools{
+        nodejs 'node26'
     }
 
     stages{   
-        stage("init"){
+        stage("build node"){
             steps{
                 script{
-                    gv = load "script.groovy"
+                    echo "Building the application..."
+                    sh "npm install"
                 }
             }
-        }
-
-        stage("build"){
+        } 
+        
+        stage("build image"){
             steps{
                 script{
-                    gv.buildApp()
+                    echo "Building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t aziz-dh/blog-coffee-app:nodejs-bc-2.0 . "
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push aziz-dh/blog-coffee-app:nodejs-bc-2.0"
+                    }
                 }
             }
-        }
-    
-    
-        stage("test"){
-
-            when{
-                expression{ return params.RUN_TESTS }
-            }
-
-            steps{
-                script{
-                    gv.testApp()
-                }
-            }
-        }   
+        } 
         
         stage("deploy"){
-         input {
-                message "Choose the deployment environment"
-                ok "Deploy"
-                parameters {
-                    choice(name: 'ENV', choices: ["dev", "staging", "production"], description: "Select the deployment environment")
-                }
-            }
-         
             steps{
-                //echo "Deploying to server with credentials: ${SERVER_CREDENTIALS}"
-
-                // withCredentials([usernamePassword(credentialsId: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)])
-                // {
-                //     sh "echo Deploying to server with username: ${USER} and password: ${PWD}"
-                // }
-
                 script{
-                    gv.deployApp()
-                    echo "Deploying to environment: ${ENV}"
+                    echo "Deploying the application..."
                 }
             
             }
