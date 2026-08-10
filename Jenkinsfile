@@ -74,7 +74,7 @@ pipeline{
                 //     sh "echo Deploying to server with username: ${USER} and password: ${PWD}"
                 // }
 
-                input{
+                input {
                     message: "Choose the deployment environment"
                     ok: "Deploy"
                     parameters {
