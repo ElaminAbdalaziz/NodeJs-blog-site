@@ -74,8 +74,17 @@ pipeline{
                 //     sh "echo Deploying to server with username: ${USER} and password: ${PWD}"
                 // }
 
+                input{
+                    message: "Choose the deployment environment"
+                    ok: "Deploy"
+                    parameters{
+                        choice(name: "ENV", choices: ["dev", "staging", "production"], description: "Select the deployment environment")
+                    }
+                }
+
                 script{
                     gv.deployApp()
+                    echo "Deploying to environment: ${ENV}"
                 }
             
             }
