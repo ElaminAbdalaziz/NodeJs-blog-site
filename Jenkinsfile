@@ -1,3 +1,5 @@
+def gv
+
 pipeline{
     agent any
 
@@ -5,12 +7,19 @@ pipeline{
         nodejs 'node26'
     }
 
-    stages{   
+    stages{  
+        stage("init"){
+            steps{
+                script{
+                    gv = load "globalVar.groovy"
+                }
+            }
+        }
+
         stage("build node"){
             steps{
                 script{
-                    echo "Building the application..."
-                    sh "npm install"
+                    gv.buildNode()
                 }
             }
         } 
@@ -18,12 +27,7 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    echo "Building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t neededcofe/blog-coffee:NJs-BC-2.0 . "
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push neededcofe/blog-coffee:NJs-BC-2.0"
-                    }
+                    gv.buildImage()
                 }
             }
         } 
@@ -31,7 +35,7 @@ pipeline{
         stage("deploy"){
             steps{
                 script{
-                    echo "Deploying the application..."
+                    gv.deployApp()
                 }
             
             }
