@@ -29,7 +29,7 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage()git pus
+                    buildImage()
                 }
             }
         } 
