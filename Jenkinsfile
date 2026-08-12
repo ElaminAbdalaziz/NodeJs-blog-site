@@ -29,7 +29,7 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage()
+                    buildImage 'neededcofe/blog-coffee:NJs-BC-3.0'    
                 }
             }
         } 
