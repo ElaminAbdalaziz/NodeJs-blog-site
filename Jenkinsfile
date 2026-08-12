@@ -30,6 +30,8 @@ pipeline{
             steps{
                 script{
                     buildImage 'neededcofe/blog-coffee:NJs-BC-3.0'    
+                    dockerLogin()
+                    dockerPush('neededcofe/blog-coffee:NJs-BC-3.0')
                 }
             }
         } 
