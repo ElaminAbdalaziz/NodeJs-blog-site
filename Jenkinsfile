@@ -67,15 +67,9 @@ pipeline{
 
         stage("commit version update"){
             steps{
-                withCredentials([gitUsernamePassword(credentialsId: 'Neededcofe', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'Neededcofe', gitToolName: 'Default')]) {
                     sh 'git config --global user.email "jenkins@example.com"'
                     sh 'git config --global user.name "jenkins"'
-
-                    sh 'git status'
-                    sh 'git branch'
-                    sh 'git config --list'
-
-                    sh "git remote set-url origin https://${USER}:${PASS}@github.com/ElaminAbdalaziz/NodeJs-blog-site.git"
                     sh 'git add .'
                     sh "git commit -m 'Update version to ${env.APP_VERSION}'"
                     sh 'git push origin HEAD:main'
@@ -84,4 +78,5 @@ pipeline{
         }
     }
 }
+
 
