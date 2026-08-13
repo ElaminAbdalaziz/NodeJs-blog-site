@@ -49,7 +49,7 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage "neededcofe/blog-coffee:${env.APP_VERSION} ."   
+                    buildImage "neededcofe/blog-coffee:${env.APP_VERSION}"   
                     dockerLogin()
                     dockerPush "neededcofe/blog-coffee:${env.APP_VERSION}"
                 }
