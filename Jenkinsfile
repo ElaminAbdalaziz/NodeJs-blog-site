@@ -78,7 +78,7 @@ pipeline{
                     sh "git remote set-url origin https://${USER}:${PASS}@github.com/ElaminAbdalaziz/NodeJs-blog-site.git"
                     sh 'git add .'
                     sh "git commit -m 'Update version to ${env.APP_VERSION}'"
-                    sh 'git push origin main'
+                    sh 'git push origin HEAD:main'
                 }
             }
         }
