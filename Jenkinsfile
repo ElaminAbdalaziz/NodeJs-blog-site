@@ -16,6 +16,20 @@ pipeline{
     }
 
     stages{  
+        stage("increment version"){
+            steps{
+                sh 'npm version patch --no-git-tag-version'
+                script{
+                    echo "incrementing app version..."
+                    env.APP_VERSION = sh(
+                        script: "node -p \"require('./package.json').version\"", 
+                        returnStdout: true
+                    ).trim()
+
+                }
+            }
+        }
+
         stage("init"){
             steps{
                 script{
@@ -35,9 +49,9 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage 'neededcofe/blog-coffee:NJs-BC-3.0'    
+                    buildImage "neededcofe/blog-coffee:${env.APP_VERSION} ."   
                     dockerLogin()
-                    dockerPush('neededcofe/blog-coffee:NJs-BC-3.0')
+                    dockerPush "neededcofe/blog-coffee:${env.APP_VERSION}"
                 }
             }
         } 
