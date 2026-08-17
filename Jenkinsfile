@@ -59,9 +59,15 @@ pipeline{
         stage("deploy"){
             steps{
                 script{
-                    sshagent(credentials: ['ec2-server-key'], executable: '') {
-                        dockerCmd = "docker run -d -p 10000:10000 --env-file .env neededcofe/blog-coffee:${env.APP_VERSION}"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@y13.61.152.15 ${dockerCmd}"
+                    sshagent(credentials: ['ec2-server-key']) {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ec2-user@13.61.152.15 '
+                                docker pull neededcofe/blog-coffee:${env.APP_VERSION} &&
+                                docker stop blog-coffee || true &&
+                                docker rm blog-coffee || true &&
+                                docker run -d --name blog-coffee -p 10000:10000 --env-file .env --restart unless-stopped neededcofe/blog-coffee:${env.APP_VERSION}
+                            '
+                        """
                     }
 
                     gv.deployApp()
