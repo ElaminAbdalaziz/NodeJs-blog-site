@@ -59,6 +59,11 @@ pipeline{
         stage("deploy"){
             steps{
                 script{
+                    sshagent(credentials: ['ec2-server-key'], executable: '') {
+                        dockerCmd = "docker run -d -p 10000:10000 --env-file .env neededcofe/blog-coffee:${env.APP_VERSION}"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@y13.61.152.15 ${dockerCmd}"
+                    }
+
                     gv.deployApp()
                 }
             
