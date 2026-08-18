@@ -61,7 +61,7 @@ pipeline{
                 script{
                     sshagent(credentials: ['ec2-server-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ec2-user@13.61.152.15 '
+                            ssh -o StrictHostKeyChecking=no ec2-user@13.53.173.205 '
                                 docker pull neededcofe/blog-coffee:${env.APP_VERSION} &&
                                 docker stop blog-coffee || true &&
                                 docker rm blog-coffee || true &&
