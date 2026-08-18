@@ -70,7 +70,7 @@ pipeline{
                         //     '
                         // """
 
-                        sh "scp docker-compose.yml ec2-user@13.53.173.205:/home/ec2-user"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.53.173.205:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.173.205 ${dockerComposeCmd}"
                     }
 
