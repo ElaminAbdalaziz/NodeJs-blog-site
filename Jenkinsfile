@@ -59,7 +59,7 @@ pipeline{
         stage("deploy"){
             steps{
                 script{
-                    def dockerComposeCmd = "docker-compose -f docker-compose.prod.yml up --detach"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yml up --detach"
                     sshagent(credentials: ['ec2-server-key']) {
                         // sh """
                         //     ssh -o StrictHostKeyChecking=no ec2-user@13.53.173.205 '
