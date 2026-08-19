@@ -9,7 +9,7 @@
 
  services:
   app:
-    image: neededcofe/blog-coffee:${APP_VERSION}
+    image: ${IMG_NAME}:${APP_VERSION}
     ports:
       - "10000:10000"
     env_file:

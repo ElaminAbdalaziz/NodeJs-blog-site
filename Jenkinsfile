@@ -15,6 +15,10 @@ pipeline{
         nodejs 'node26'
     }
 
+    environment{
+        IMG_NAME = "neededcofe/blog-coffee:${APP_VERSION}"
+    }
+
     stages{  
         stage("increment version"){
             steps{
@@ -49,9 +53,9 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage "neededcofe/blog-coffee:${env.APP_VERSION}"   
+                    buildImage "$IMG_NAME:${env.APP_VERSION}"   
                     dockerLogin()
-                    dockerPush "neededcofe/blog-coffee:${env.APP_VERSION}"
+                    dockerPush "$IMG_NAME:${env.APP_VERSION}"
                 }
             }
         } 
@@ -60,7 +64,7 @@ pipeline{
             steps{
                 script {
                     echo "deploying to ec2 instance... "
-                    def shellCmd = "bash ./server-cmds.sh" 
+                    def shellCmd = "bash ./server-cmds.sh ${IMG_NAME}:${env.APP_VERSION}" 
                     sshagent(credentials: ['ec2-server-key']) {
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ec2-user@13.50.197.201:/home/ec2-user"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.50.197.201:/home/ec2-user"
