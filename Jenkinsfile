@@ -59,19 +59,19 @@ pipeline{
         stage("deploy"){
             steps{
                 script{
-                    // def dockerComposeCmd = "docker-compose -f docker-compose.yml up --detach"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yml up --detach"
                     sshagent(credentials: ['ec2-server-key']) {
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ec2-user@13.50.197.201 '
-                                docker pull neededcofe/blog-coffee:${env.APP_VERSION} &&
-                                docker stop blog-coffee || true &&
-                                docker rm blog-coffee || true &&
-                                docker run -d --name blog-coffee -p 10000:10000 --env-file .env --restart unless-stopped neededcofe/blog-coffee:${env.APP_VERSION}
-                            '
-                        """
+                        // sh """
+                        //     ssh -o StrictHostKeyChecking=no ec2-user@13.50.197.201 '
+                        //         docker pull neededcofe/blog-coffee:${env.APP_VERSION} &&
+                        //         docker stop blog-coffee || true &&
+                        //         docker rm blog-coffee || true &&
+                        //         docker run -d --name blog-coffee -p 10000:10000 --env-file .env --restart unless-stopped neededcofe/blog-coffee:${env.APP_VERSION}
+                        //     '
+                        // """
 
-                        // sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.50.197.201:/home/ec2-user"
-                        // sh "ssh -o StrictHostKeyChecking=no ec2-user@13.50.197.201 ${dockerComposeCmd}"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.50.197.201:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.50.197.201 ${dockerComposeCmd}"
                     }
 
                     gv.deployApp()
