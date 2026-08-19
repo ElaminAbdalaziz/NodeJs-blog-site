@@ -16,7 +16,7 @@ pipeline{
     }
 
     environment{
-        IMG_NAME = "neededcofe/blog-coffee:${APP_VERSION}"
+        IMG_NAME = "neededcofe/blog-coffee"
     }
 
     stages{  
