@@ -60,7 +60,7 @@ pipeline{
             steps{
                 script {
                     echo "deploying to ec2 instance... "
-                    def sellCmd = "bash ./shell-cmds.sh" 
+                    def shellCmd = "bash ./server-cmds.sh" 
                     sshagent(credentials: ['ec2-server-key']) {
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ec2-user@13.50.197.201:/home/ec2-user"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yml ec2-user@13.50.197.201:/home/ec2-user"
